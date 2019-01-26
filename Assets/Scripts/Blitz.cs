@@ -12,9 +12,20 @@ public class Blitz : MonoBehaviour
     public float announceTime;
     public float blitzTime;
 
+    public bool startLerp;
+    Vector3 startScale;
+
     void Start() {
         blitz.SetActive(false);
         announcePoint.SetActive(false);
+
+        startScale = announcePoint.transform.localScale;
+    }
+
+    private void Update() {
+        if (startLerp) {
+            announcePoint.transform.localScale = Vector3.Lerp(announcePoint.transform.localScale, new Vector3(0.1f, 0.1f, announcePoint.transform.localScale.z), 1 * Time.deltaTime);
+        }
     }
 
     void OnEnable() {
@@ -32,8 +43,11 @@ public class Blitz : MonoBehaviour
     IEnumerator AnnounceBlitz() {
 
         announcePoint.SetActive(true);
+        startLerp = true;
         yield return new WaitForSeconds(announceTime);
         announcePoint.SetActive(false);
+        announcePoint.transform.localScale = startScale;
+        startLerp = false;
 
         StartCoroutine(Blitzen());
     }
