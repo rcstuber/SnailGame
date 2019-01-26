@@ -8,7 +8,7 @@ public class BlitzSpawn : MonoBehaviour
     public float radiusOfEarth = 0.85f;
     public Vector2 spawnAnge = new Vector2 (-20, -180);
 
-    [Header("Until Next Blitz")]
+    [Header("Until Next Lightning")]
     [Space]
     public float waitMinTime = 2; 
     public float WaitMaxTime = 3;
