@@ -109,6 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5970884548289839108}
   - component: {fileID: 5970884548289839109}
+  - component: {fileID: 4148250662256884646}
   m_Layer: 0
   m_Name: Lightning
   m_TagString: Untagged
@@ -150,6 +151,22 @@ MonoBehaviour:
   WaitMaxTime: 1
   announceTime: 1.5
   blitzTime: 0.3
+--- !u!58 &4148250662256884646
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5970884548289839110}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.39
 --- !u!1 &5970884548926482399
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +316,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+  m_Color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 0.078431375}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Blitz : MonoBehaviour
 {
-
     public GameObject blitz;
     public GameObject announcePoint;
 
     public float waitMinTime = 0.1f, WaitMaxTime = 1f;
     public float announceTime;
     public float blitzTime;
+
 
     void Start() {
         blitz.SetActive(false);
@@ -44,5 +44,13 @@ public class Blitz : MonoBehaviour
         blitz.SetActive(false);
 
         this.gameObject.SetActive(false);
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.tag == "Player" && blitz.active)
+        {
+            other.gameObject.SendMessage("OnHitByLightning");
+        }
     }
 }

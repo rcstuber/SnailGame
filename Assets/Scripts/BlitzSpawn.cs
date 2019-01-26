@@ -35,17 +35,20 @@ public class BlitzSpawn : MonoBehaviour
         float waitSec = Random.Range(waitMinTime, WaitMaxTime);
         yield return new WaitForSeconds(waitSec);
 
-        for (int a = 0; a < atSameTime; a++) {
+        if(Game.Current.isRunning) {
 
-            for (int i = 0; i < pooledObjects.Count; i++) {
-                if (!pooledObjects[i].activeInHierarchy) {
-                    pooledObjects[i].SetActive(true);
-                    pooledObjects[i].transform.position = transform.position;
+            for (int a = 0; a < atSameTime; a++) {
 
-                    // hier muss eine random Winkeldrehung rein
-                    pooledObjects[i].transform.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, Random.Range(spawnAnge.x, spawnAnge.y));
-                    pooledObjects[i].transform.Translate(new Vector3(0, radiusOfEarth, 0));
-                    break;
+                for (int i = 0; i < pooledObjects.Count; i++) {
+                    if (!pooledObjects[i].activeInHierarchy) {
+                        pooledObjects[i].SetActive(true);
+                        pooledObjects[i].transform.position = transform.position;
+
+                        // TODO: Add random angle
+                        pooledObjects[i].transform.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, Random.Range(spawnAnge.x, spawnAnge.y));
+                        pooledObjects[i].transform.Translate(new Vector3(0, radiusOfEarth, 0));
+                        break;
+                    }
                 }
             }
         }

@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
 
     public float health = 100;
 
+    [HideInInspector]
+    public float totalDistance = 0;
+
 
     [Header("Sounds")]
 
@@ -33,10 +36,14 @@ public class Player : MonoBehaviour
 
     public AudioClip soundSlideOff;
 
+    public AudioClip soundElectrocute;
+
 
     [Header("Sprites")]
 
-    public Sprite spritedShelled;
+    public Sprite spriteShelled;
+
+    public Sprite spriteElectrocuted;
 
 
     public float worldAmplitude {
@@ -49,7 +56,10 @@ public class Player : MonoBehaviour
 
     private float _startTime = 0;
 
+    private float _initialHealth = 100;
+
     private Sprite defaultSprite;
+
 
     // Components
 
@@ -60,6 +70,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        _initialHealth = health;
         _startTime = Time.time;
         renderer = GetComponentInChildren<SpriteRenderer>();
         audio = GetComponent<AudioSource>();
@@ -82,12 +93,15 @@ public class Player : MonoBehaviour
 
     private float forwardSpeed = 10.0f;
 
+    private bool hasDied = false;
+
+
     private float _lastMashTime = 0;
 
     private bool _isInShell = false;
 
     private bool _isFirstLoop = true;
-    
+
 
     void Update()
     {
@@ -95,10 +109,10 @@ public class Player : MonoBehaviour
             return;
 
         // Hide in shell
-        if(Input.GetButtonDown("Jump") && !_isFirstLoop)
+        if(Input.GetButtonDown("Jump") && !_isFirstLoop && health > 0)
         {
             _isInShell = !_isInShell;
-            renderer.sprite = _isInShell ? spritedShelled : defaultSprite;
+            renderer.sprite = _isInShell ? spriteShelled : defaultSprite;
 
             audio.pitch = 1;
             audio.PlayOneShot(soundHide);
@@ -107,7 +121,7 @@ public class Player : MonoBehaviour
         }
 
         // Crawl forward
-        if(!_isInShell && Input.GetButtonDown("Fire1"))
+        if(!_isInShell && Input.GetButtonDown("Fire1") && health > 0)
         {
             _totalMashNum += 1;
             var curMashsPerMinute = 60.0f / (Time.time - _lastMashTime);
@@ -129,6 +143,10 @@ public class Player : MonoBehaviour
             }
         }
 
+        if(health == 0) {
+            forwardSpeed = 0;
+        }
+
         // Move snail with world
         var deg = (_isInShell ? shellSlither : 1f) * world.angularSpeed - forwardSpeed;
         transform.Rotate(Vector3.forward * deg * Time.deltaTime);
@@ -139,6 +157,12 @@ public class Player : MonoBehaviour
             renderer.sprite = null;
         }
 
+        // Count distance
+        if(forwardSpeed > 0)
+        {
+            totalDistance += (forwardSpeed * Time.deltaTime) / 1000f;
+        }
+            
         _isFirstLoop = false;
     }
 
@@ -146,8 +170,20 @@ public class Player : MonoBehaviour
     {
         _isInShell = false;
         _isFirstLoop = true;
+
+        health = _initialHealth;
+        totalDistance = 0;
         forwardSpeed = 0;
         renderer.sprite = defaultSprite;
         transform.rotation = Quaternion.identity;
+    }
+
+    public void OnHitByLightning() 
+    {
+        renderer.sprite = spriteElectrocuted;
+        audio.pitch = 1f;
+        audio.PlayOneShot(soundElectrocute);
+
+        health = 0;
     }
 }
