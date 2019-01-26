@@ -34,7 +34,7 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceLabel.text = distanceMeter.ToString("0.0") + "m";
+        distanceLabel.text = distanceMeter.ToString("0.0") + " m";
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
         distanceSlider.value = distanceMeter / distanceGoal;

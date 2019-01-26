@@ -67,6 +67,12 @@ public class Player : MonoBehaviour
 
     private SpriteRenderer renderer;
 
+    public ParticleSystem slimePS;
+
+    public Animator animatorSnail;
+
+    public Animator animatorHouse;
+
 
     void Start()
     {
@@ -74,6 +80,9 @@ public class Player : MonoBehaviour
         _startTime = Time.time;
         renderer = GetComponentInChildren<SpriteRenderer>();
         audio = GetComponent<AudioSource>();
+        slimePS.Stop();
+        animatorSnail.enabled = false;
+        animatorHouse.enabled = false;
 
         defaultSprite = renderer?.sprite;
     }
@@ -114,10 +123,14 @@ public class Player : MonoBehaviour
             _isInShell = !_isInShell;
             renderer.sprite = _isInShell ? spriteShelled : defaultSprite;
 
+            /* 
             audio.pitch = 1;
             audio.PlayOneShot(soundHide);
             audio.clip = soundSlideOff;
             audio.PlayDelayed(soundHide.length);
+            */
+
+            SoundManager.instance.PlaySound(SoundManager.instance.soundHide, 1, 1);
         }
 
         // Crawl forward
@@ -133,13 +146,21 @@ public class Player : MonoBehaviour
             _lastMashTime = Time.time;
 
             if(!audio.isPlaying) {
-                audio.PlayOneShot(soundCrawl);
-                audio.pitch = Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f);
+                //audio.PlayOneShot(soundCrawl);
+                //audio.pitch = Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f);
+
+                SoundManager.instance.PlaySound(SoundManager.instance.soundCrawl, 1, Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f));
             }
-        } else {
+
+            slimePS.Play();
+        }
+        else {
             if(Time.time - _lastMashTime > 0.2)
             {
                 forwardSpeed = 0;
+                slimePS.Stop();
+                animatorSnail.enabled = false;
+                animatorHouse.enabled = false;
             }
         }
 
@@ -153,7 +174,8 @@ public class Player : MonoBehaviour
 
         if(amplitude > 90.0)
         {
-            audio.PlayOneShot(soundSmashed);
+            //audio.PlayOneShot(soundSmashed);
+            SoundManager.instance.PlaySound(SoundManager.instance.soundSmashed, 1, 1);
             renderer.sprite = null;
         }
 
@@ -161,8 +183,10 @@ public class Player : MonoBehaviour
         if(forwardSpeed > 0)
         {
             totalDistance += (forwardSpeed * Time.deltaTime) / 1000f;
+            animatorSnail.enabled = true;
+            animatorHouse.enabled = true;
         }
-            
+
         _isFirstLoop = false;
     }
 
@@ -181,8 +205,12 @@ public class Player : MonoBehaviour
     public void OnHitByLightning() 
     {
         renderer.sprite = spriteElectrocuted;
-        audio.pitch = 1f;
-        audio.PlayOneShot(soundElectrocute);
+        //audio.pitch = 1f;
+        //audio.PlayOneShot(soundElectrocute);
+        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 1, 1);
+        slimePS.Stop();
+        animatorSnail.enabled = false;
+        animatorHouse.enabled = false;
 
         health = 0;
     }

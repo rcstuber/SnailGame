@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2810519077895509055}
   - component: {fileID: 2810519077895509048}
   m_Layer: 0
-  m_Name: script_BlitzSpawn
+  m_Name: LightningSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,9 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da652a5d30b1c4b3d802a0140e3839fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blitzeGleichzeitig: 1
-  radiusOfEarth: 2.4
-  spawnAngle: {x: -20, y: -180}
+  atSameTime: 2
+  radiusOfEarth: 2.5
+  spawnAnge: {x: -20, y: -180}
   waitMinTime: 2
   WaitMaxTime: 3
   pooledObject: {fileID: 5970884548289839110, guid: b502c16ab2c17495dbcd00476d9a5c7f,
