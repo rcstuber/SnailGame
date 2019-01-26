@@ -35,6 +35,8 @@ public class Game : MonoBehaviour
 
     public HUD hud;
 
+    public BlitzSpawn lightningSpawner;
+
 
     [Header("Gameplay Settings")]
 
@@ -152,5 +154,8 @@ public class Game : MonoBehaviour
     {
         world.angularSpeed = _defaultWorldRotationSpeed * difficulty;
         player.mashMultiplier = difficulty;
+
+        // TODO: Increase lightning frequency
+        //lightningSpawner.atSameTime = ??
     }
 }
