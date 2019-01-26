@@ -1,0 +1,153 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public GameWorld world;
+
+    public Transform character;
+
+
+    public float mashsPerMinute = 15;
+
+    [HideInInspector]
+    public float mashMultiplier = 1f;
+
+    public float mashGain = 5;
+
+    public bool isGainExponential = true;
+
+    public float shellSlither = 2f;
+
+    public float health = 100;
+
+
+    [Header("Sounds")]
+
+    public AudioClip soundCrawl;
+
+    public AudioClip soundHide;
+
+    public AudioClip soundSmashed;
+
+    public AudioClip soundSlideOff;
+
+
+    [Header("Sprites")]
+
+    public Sprite spritedShelled;
+
+
+    public float worldAmplitude {
+        get => amplitude;
+    }
+
+    // Temp vars
+
+    private float _totalMashNum = 0;
+
+    private float _startTime = 0;
+
+    private Sprite defaultSprite;
+
+    // Components
+
+    private AudioSource audio;
+
+    private SpriteRenderer renderer;
+
+
+    void Start()
+    {
+        _startTime = Time.time;
+        renderer = GetComponentInChildren<SpriteRenderer>();
+        audio = GetComponent<AudioSource>();
+
+        defaultSprite = renderer?.sprite;
+    }
+
+    private float amplitude {
+        get {
+            return Vector3.Angle(Vector3.up, character.position);
+        }
+    }
+
+    private float requiredMashFrequency {
+        get {
+            var gain = mashGain * (isGainExponential ? (amplitude*amplitude / 8100f) : (amplitude / 90f));
+            return (mashMultiplier * mashsPerMinute) + gain;
+        }
+    }
+
+    private float forwardSpeed = 10.0f;
+
+    private float _lastMashTime = 0;
+
+    private bool _isInShell = false;
+
+    private bool _isFirstLoop = true;
+    
+
+    void Update()
+    {
+        if(!Game.Current.isRunning)
+            return;
+
+        // Hide in shell
+        if(Input.GetButtonDown("Jump") && !_isFirstLoop)
+        {
+            _isInShell = !_isInShell;
+            renderer.sprite = _isInShell ? spritedShelled : defaultSprite;
+
+            audio.pitch = 1;
+            audio.PlayOneShot(soundHide);
+            audio.clip = soundSlideOff;
+            audio.PlayDelayed(soundHide.length);
+        }
+
+        // Crawl forward
+        if(!_isInShell && Input.GetButtonDown("Fire1"))
+        {
+            _totalMashNum += 1;
+            var curMashsPerMinute = 60.0f / (Time.time - _lastMashTime);
+
+            if(!float.IsNaN(curMashsPerMinute))
+            {
+                forwardSpeed = world.angularSpeed * (curMashsPerMinute / requiredMashFrequency);
+            }
+            _lastMashTime = Time.time;
+
+            if(!audio.isPlaying) {
+                audio.PlayOneShot(soundCrawl);
+                audio.pitch = Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f);
+            }
+        } else {
+            if(Time.time - _lastMashTime > 0.2)
+            {
+                forwardSpeed = 0;
+            }
+        }
+
+        // Move snail with world
+        var deg = (_isInShell ? shellSlither : 1f) * world.angularSpeed - forwardSpeed;
+        transform.Rotate(Vector3.forward * deg * Time.deltaTime);
+
+        if(amplitude > 90.0)
+        {
+            audio.PlayOneShot(soundSmashed);
+            renderer.sprite = null;
+        }
+
+        _isFirstLoop = false;
+    }
+
+    public void ResetPlayer()
+    {
+        _isInShell = false;
+        _isFirstLoop = true;
+        forwardSpeed = 0;
+        renderer.sprite = defaultSprite;
+        transform.rotation = Quaternion.identity;
+    }
+}
