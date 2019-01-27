@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
     {
         renderer.sprite = spriteElectrocuted;
 
-        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 1, 1);
+        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.6f, 1);
         slimePS.Stop();
         animatorSnail.enabled = false;
         animatorHouse.enabled = false;
