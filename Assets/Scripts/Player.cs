@@ -28,9 +28,17 @@ public class Player : MonoBehaviour
 
     [Header("Sprites")]
 
-    public Sprite spriteShelled;
+    public GameObject root;
 
-    public Sprite spriteElectrocuted;
+    public GameObject[] playerStates;
+
+    private void SetState(int state)
+    {
+        for(int i = 0; i<playerStates.Length; i++)
+        {
+            playerStates[i].SetActive(i == state);
+        }
+    }
 
 
     public float worldAmplitude {
@@ -52,7 +60,6 @@ public class Player : MonoBehaviour
 
     private AudioSource audio;
 
-    private SpriteRenderer renderer;
 
     public ParticleSystem slimePS;
 
@@ -65,13 +72,12 @@ public class Player : MonoBehaviour
     {
         _initialHealth = health;
         _startTime = Time.time;
-        renderer = GetComponentInChildren<SpriteRenderer>();
         audio = GetComponent<AudioSource>();
         slimePS.Stop();
         animatorSnail.enabled = false;
         animatorHouse.enabled = false;
 
-        defaultSprite = renderer?.sprite;
+        SetState(0);
     }
 
     private float amplitude {
@@ -108,7 +114,7 @@ public class Player : MonoBehaviour
         if(Input.GetButtonDown("Jump") && !_isFirstLoop && health > 0)
         {
             _isInShell = !_isInShell;
-            renderer.sprite = _isInShell ? spriteShelled : defaultSprite;
+            SetState(_isInShell ? 1 : 0);
 
             SoundManager.instance.PlaySound(SoundManager.instance.soundHide, 1, 1);
         }
@@ -152,7 +158,7 @@ public class Player : MonoBehaviour
         if(amplitude > 90.0)
         {
             SoundManager.instance.PlaySound(SoundManager.instance.soundSmashed, 1, 1);
-            renderer.sprite = null;
+            root.SetActive(false);
         }
 
         // Count distance
@@ -174,13 +180,15 @@ public class Player : MonoBehaviour
         health = _initialHealth;
         totalDistance = 0;
         forwardSpeed = 0;
-        renderer.sprite = defaultSprite;
         transform.rotation = Quaternion.identity;
+
+        root.SetActive(true);
+        SetState(0);
     }
 
     public void OnHitByLightning() 
     {
-        renderer.sprite = spriteElectrocuted;
+        SetState(2);
 
         SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.6f, 1);
         slimePS.Stop();

@@ -66,6 +66,8 @@ public class Game : MonoBehaviour
 
     private Stage activeStage;
 
+    private float highscoreScore = 0;
+
     // Components
 
     private AudioSource audio;
@@ -102,6 +104,7 @@ public class Game : MonoBehaviour
                     var stageIndex = stages.IndexOf(activeStage);
                     if(stageIndex + 1 < stages.Count) {
                         activeStage = stages[stageIndex + 1];
+                        highscoreScore += player.totalDistance;
                         player.totalDistance = 0;
 
                         audio.PlayOneShot(soundLevelProgression);
@@ -119,6 +122,8 @@ public class Game : MonoBehaviour
         } else if(menu.activeSelf) {
             if(Input.anyKeyDown)
             {
+                highscoreScore = 0;
+
                 player.ResetPlayer();
                 menu.SetActive(false);
                 highscoreManager.Show(false);
@@ -130,7 +135,8 @@ public class Game : MonoBehaviour
 
     IEnumerator GameOver()
     {
-        highscoreManager.AddHighscore(player.totalDistance);
+        highscoreManager.AddHighscore(0 == stages.IndexOf(activeStage) 
+            ? player.totalDistance : highscoreScore);
         highscoreManager.Show(true);
 
         isRunning = false;
@@ -150,7 +156,8 @@ public class Game : MonoBehaviour
 
     IEnumerator GameVictory()
     {
-        highscoreManager.AddHighscore(player.totalDistance);
+        highscoreManager.AddHighscore(0 == stages.IndexOf(activeStage) 
+            ? player.totalDistance : highscoreScore);
 
 
         isRunning = false;
