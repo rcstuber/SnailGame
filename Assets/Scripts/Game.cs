@@ -85,6 +85,7 @@ public class Game : MonoBehaviour
         gameOverMenu.SetActive(false);
         gameVictoryMenu.SetActive(false);
         hud.gameObject.SetActive(false);
+        highscoreManager.Show(false);
     }
 
     void Update()
@@ -120,6 +121,7 @@ public class Game : MonoBehaviour
             {
                 player.ResetPlayer();
                 menu.SetActive(false);
+                highscoreManager.Show(false);
                 hud.gameObject.SetActive(true);
                 isRunning = true;
             }
@@ -128,11 +130,8 @@ public class Game : MonoBehaviour
 
     IEnumerator GameOver()
     {
-        if( highscoreManager.AddHighscore(player.totalDistance) )
-        {
-            //highscoreManager.Show(true);
-            //yield break;
-        }
+        highscoreManager.AddHighscore(player.totalDistance);
+        highscoreManager.Show(true);
 
         isRunning = false;
         audio.PlayOneShot(soundGameOver);

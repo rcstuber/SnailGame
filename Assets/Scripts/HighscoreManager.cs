@@ -19,11 +19,16 @@ public class HighscoreManager : MonoBehaviour
 
     public Text[] scoreRows;
 
+    public Color highlightColor;
+
+
     public int numScores {
         get => scoreRows.Length;
     }
 
     private List<Highscore> highscoreList = new List<Highscore>();
+
+    private int latestPlace = -1;
 
     static string prefsKey = "highscores";
 
@@ -49,7 +54,9 @@ public class HighscoreManager : MonoBehaviour
         {
             if(i < highscoreList.Count) {
                 float score = highscoreList[i].score;
-                scoreRows[i].text = highscoreList[i].name + " -- " + score.ToString("0.0") + " m";
+                scoreRows[i].text = score.ToString("N2") + " Meter";
+
+                scoreRows[i].color = (i == latestPlace) ? highlightColor : Color.white;
             } else {
                 scoreRows[i].text = "--";
             }
@@ -58,8 +65,10 @@ public class HighscoreManager : MonoBehaviour
 
     public bool AddHighscore(float newScore)
     {
-        if(newScore < 0.1)
+        if(newScore < 0.1) {
+            latestPlace = -1;
             return false;
+        }
 
         var highscore = new Highscore();
         highscore.name = "Player";
@@ -68,12 +77,16 @@ public class HighscoreManager : MonoBehaviour
         int newPlace = highscoreList.FindIndex( entry => entry.score < newScore);
         if(newPlace < 0)
         {
-            if(highscoreList.Count >= numScores)
+            if(highscoreList.Count >= numScores) {
+                latestPlace = -1;
                 return false; // not a highscore
+            }
 
             highscoreList.Add(highscore);
+            latestPlace = 0;
         } else {
             highscoreList.Insert(newPlace, highscore);
+            latestPlace = newPlace;
         }
 
         if(highscoreList.Count > numScores)
@@ -94,6 +107,8 @@ public class HighscoreManager : MonoBehaviour
 
     public void ClearHighscores()
     {
+        latestPlace = -1;
+
         highscoreList.Clear();
         var store = new HighscoreStore();
         store.scores = highscoreList;
