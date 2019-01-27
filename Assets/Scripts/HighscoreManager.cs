@@ -33,7 +33,7 @@ public class HighscoreManager : MonoBehaviour
     static string prefsKey = "highscores";
 
 
-    void Start()
+    void Awake()
     {
         string json = PlayerPrefs.GetString(prefsKey);
         if(null != json)
@@ -54,7 +54,7 @@ public class HighscoreManager : MonoBehaviour
         {
             if(i < highscoreList.Count) {
                 float score = highscoreList[i].score;
-                scoreRows[i].text = score.ToString("N2") + " Meter";
+                scoreRows[i].text = score.ToString("N2") + " m";
 
                 scoreRows[i].color = (i == latestPlace) ? highlightColor : Color.white;
             } else {
