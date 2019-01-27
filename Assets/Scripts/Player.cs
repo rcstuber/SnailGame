@@ -188,6 +188,9 @@ public class Player : MonoBehaviour
 
     public void OnHitByLightning() 
     {
+        if(_isInShell)
+            return;
+            
         SetState(2);
 
         SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.6f, 1);
