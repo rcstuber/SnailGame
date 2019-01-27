@@ -33,6 +33,10 @@ public class SoundManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start() {
+        PlayMusic(music01, 0.8f);
+    }
+
     //--------------------- Music ---------------------------
 
     public void PlayMusic(AudioClip musicClip, float volume = 1) {
