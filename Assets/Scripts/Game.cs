@@ -14,6 +14,9 @@ public class Game : MonoBehaviour
         public float distanceGoal;
         public float difficulty;
 
+        public float lightningCount;
+        public Vector2 lightningSpawnTime;
+
         public Color stageColor;
     }
     
@@ -49,10 +52,15 @@ public class Game : MonoBehaviour
 
     public AudioClip soundGameVictory;
 
+    public AudioClip soundLevelProgression;
+
+
+    [Header("Managers")]
+
+    public HighscoreManager highscoreManager;
 
     public bool isRunning = false;
 
-    public float difficulty = 1f;
 
     private float _defaultWorldRotationSpeed = 0;
 
@@ -73,6 +81,7 @@ public class Game : MonoBehaviour
         audio = GetComponent<AudioSource>();
         _defaultWorldRotationSpeed = world.angularSpeed;
 
+        menu.SetActive(true);
         gameOverMenu.SetActive(false);
         gameVictoryMenu.SetActive(false);
         hud.gameObject.SetActive(false);
@@ -82,17 +91,19 @@ public class Game : MonoBehaviour
     {
         if(isRunning)
         {
-            SetDifficulty(activeStage.difficulty);
-
             if(player.worldAmplitude > 90f || player.health <= 0) {
                 StartCoroutine(GameOver());
             } else {
+                UpdateStageDifficulty(activeStage);
+
                 if(player.totalDistance > activeStage.distanceGoal)
                 {
                     var stageIndex = stages.IndexOf(activeStage);
                     if(stageIndex + 1 < stages.Count) {
                         activeStage = stages[stageIndex + 1];
                         player.totalDistance = 0;
+
+                        audio.PlayOneShot(soundLevelProgression);
                     } else {
                         StartCoroutine(GameVictory());
                         return;
@@ -117,6 +128,12 @@ public class Game : MonoBehaviour
 
     IEnumerator GameOver()
     {
+        if( highscoreManager.AddHighscore(player.totalDistance) )
+        {
+            //highscoreManager.Show(true);
+            //yield break;
+        }
+
         isRunning = false;
         audio.PlayOneShot(soundGameOver);
 
@@ -134,6 +151,9 @@ public class Game : MonoBehaviour
 
     IEnumerator GameVictory()
     {
+        highscoreManager.AddHighscore(player.totalDistance);
+
+
         isRunning = false;
         audio.PlayOneShot(soundGameVictory);
 
@@ -150,12 +170,13 @@ public class Game : MonoBehaviour
     }
 
 
-    public void SetDifficulty(float difficulty)
+    public void UpdateStageDifficulty(Stage stage)
     {
-        world.angularSpeed = _defaultWorldRotationSpeed * difficulty;
-        player.mashMultiplier = difficulty;
+        world.angularSpeed = _defaultWorldRotationSpeed * stage.difficulty;
+        player.mashMultiplier = stage.difficulty;
 
-        // TODO: Increase lightning frequency
-        //lightningSpawner.atSameTime = ??
+        lightningSpawner.atSameTime = stage.lightningCount;
+        lightningSpawner.waitMinTime = stage.lightningSpawnTime.x;
+        lightningSpawner.WaitMaxTime = stage.lightningSpawnTime.y;
     }
 }

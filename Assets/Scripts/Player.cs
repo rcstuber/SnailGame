@@ -26,19 +26,6 @@ public class Player : MonoBehaviour
     public float totalDistance = 0;
 
 
-    [Header("Sounds")]
-
-    public AudioClip soundCrawl;
-
-    public AudioClip soundHide;
-
-    public AudioClip soundSmashed;
-
-    public AudioClip soundSlideOff;
-
-    public AudioClip soundElectrocute;
-
-
     [Header("Sprites")]
 
     public Sprite spriteShelled;
@@ -123,13 +110,6 @@ public class Player : MonoBehaviour
             _isInShell = !_isInShell;
             renderer.sprite = _isInShell ? spriteShelled : defaultSprite;
 
-            /* 
-            audio.pitch = 1;
-            audio.PlayOneShot(soundHide);
-            audio.clip = soundSlideOff;
-            audio.PlayDelayed(soundHide.length);
-            */
-
             SoundManager.instance.PlaySound(SoundManager.instance.soundHide, 1, 1);
         }
 
@@ -146,9 +126,6 @@ public class Player : MonoBehaviour
             _lastMashTime = Time.time;
 
             if(!audio.isPlaying) {
-                //audio.PlayOneShot(soundCrawl);
-                //audio.pitch = Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f);
-
                 SoundManager.instance.PlaySound(SoundManager.instance.soundCrawl, 1, Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f));
             }
 
@@ -174,7 +151,6 @@ public class Player : MonoBehaviour
 
         if(amplitude > 90.0)
         {
-            //audio.PlayOneShot(soundSmashed);
             SoundManager.instance.PlaySound(SoundManager.instance.soundSmashed, 1, 1);
             renderer.sprite = null;
         }
@@ -205,8 +181,7 @@ public class Player : MonoBehaviour
     public void OnHitByLightning() 
     {
         renderer.sprite = spriteElectrocuted;
-        //audio.pitch = 1f;
-        //audio.PlayOneShot(soundElectrocute);
+
         SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 1, 1);
         slimePS.Stop();
         animatorSnail.enabled = false;

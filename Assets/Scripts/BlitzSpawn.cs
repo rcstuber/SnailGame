@@ -10,6 +10,7 @@ public class BlitzSpawn : MonoBehaviour
 
     [Header("Until Next Lightning")]
     [Space]
+    
     public float waitMinTime = 2; 
     public float WaitMaxTime = 3;
 
