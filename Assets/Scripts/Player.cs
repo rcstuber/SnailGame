@@ -120,22 +120,28 @@ public class Player : MonoBehaviour
         }
 
         // Crawl forward
-        if(!_isInShell && Input.GetButtonDown("Fire1") && health > 0)
+        if(!_isInShell && Input.GetButtonDown("Fire1") && health > 0 || Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && Input.GetButtonDown("Fire1") && health > 0 && !_isInShell) 
         {
-            _totalMashNum += 1;
-            var curMashsPerMinute = 60.0f / (Time.time - _lastMashTime);
 
-            if(!float.IsNaN(curMashsPerMinute))
-            {
-                forwardSpeed = world.angularSpeed * (curMashsPerMinute / requiredMashFrequency);
+            RaycastHit2D buttonHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (Input.touchCount > 0)
+                buttonHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint((Input.GetTouch(0).position)), Vector2.zero);
+
+            if (buttonHit && buttonHit.collider.CompareTag("Touch")) {
+                _totalMashNum += 1;
+                var curMashsPerMinute = 60.0f / (Time.time - _lastMashTime);
+
+                if (!float.IsNaN(curMashsPerMinute)) {
+                    forwardSpeed = world.angularSpeed * (curMashsPerMinute / requiredMashFrequency);
+                }
+                _lastMashTime = Time.time;
+
+                if (!audio.isPlaying) {
+                    SoundManager.instance.PlaySound(SoundManager.instance.soundCrawl, 1, Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f));
+                }
+
+                slimePS.Play();
             }
-            _lastMashTime = Time.time;
-
-            if(!audio.isPlaying) {
-                SoundManager.instance.PlaySound(SoundManager.instance.soundCrawl, 1, Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f));
-            }
-
-            slimePS.Play();
         }
         else {
             if(Time.time - _lastMashTime > 0.2)
@@ -193,7 +199,7 @@ public class Player : MonoBehaviour
             
         SetState(2);
 
-        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.6f, 1);
+        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.4f, 1);
         slimePS.Stop();
         animatorSnail.enabled = false;
         animatorHouse.enabled = false;

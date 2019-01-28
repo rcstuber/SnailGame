@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[RequireComponent(typeof(AudioSource))]
 public class Game : MonoBehaviour
 {
 
@@ -46,15 +44,6 @@ public class Game : MonoBehaviour
     public List<Stage> stages;
 
 
-    [Header("Sounds")]
-
-    public AudioClip soundGameOver;
-
-    public AudioClip soundGameVictory;
-
-    public AudioClip soundLevelProgression;
-
-
     [Header("Managers")]
 
     public HighscoreManager highscoreManager;
@@ -68,9 +57,6 @@ public class Game : MonoBehaviour
 
     private float highscoreScore = 0;
 
-    // Components
-
-    private AudioSource audio;
 
     void Awake()
     {
@@ -80,7 +66,6 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        audio = GetComponent<AudioSource>();
         _defaultWorldRotationSpeed = world.angularSpeed;
 
         menu.SetActive(true);
@@ -107,7 +92,7 @@ public class Game : MonoBehaviour
                         highscoreScore += player.totalDistance;
                         player.totalDistance = 0;
 
-                        audio.PlayOneShot(soundLevelProgression);
+                        SoundManager.instance.PlaySound(SoundManager.instance.soundLevelProgression,1,1);
                     } else {
                         StartCoroutine(GameVictory());
                         return;
@@ -140,7 +125,7 @@ public class Game : MonoBehaviour
         highscoreManager.Show(true);
 
         isRunning = false;
-        audio.PlayOneShot(soundGameOver);
+        SoundManager.instance.PlaySound(SoundManager.instance.soundGameOver, 0.3f, 1);
 
         hud.gameObject.SetActive(false);
         gameOverMenu.SetActive(true);
@@ -161,7 +146,7 @@ public class Game : MonoBehaviour
 
 
         isRunning = false;
-        audio.PlayOneShot(soundGameVictory);
+        SoundManager.instance.PlaySound(SoundManager.instance.soundGameVictory, 1, 1);
 
         hud.gameObject.SetActive(false);
         gameVictoryMenu.SetActive(true);

@@ -8,8 +8,6 @@ public class Weather : MonoBehaviour
 
     public Light lightning;
 
-    public AudioClip soundThunder;
-
     public float rainSpeed = 0.05f;
 
     public float lightningIntensity = 10f;
@@ -46,6 +44,7 @@ public class Weather : MonoBehaviour
     public void StartLightning()
     {
         _lightingStartTime = Time.time;
-        GetComponent<AudioSource>()?.PlayOneShot(soundThunder);
+
+        SoundManager.instance.PlaySound(SoundManager.instance.soundThunder, 1f, 1);
     }
 }

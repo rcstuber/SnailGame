@@ -23,6 +23,11 @@ public class SoundManager : MonoBehaviour {
     public AudioClip soundSmashed;
     public AudioClip soundSlideOff;
     public AudioClip soundElectrocute;
+    public AudioClip soundThunder;
+
+    public AudioClip soundGameOver;
+    public AudioClip soundGameVictory;
+    public AudioClip soundLevelProgression;
 
     void Awake() {
         if (instance == null)
