@@ -161,7 +161,7 @@ public class Player : MonoBehaviour
         var deg = (_isInShell ? shellSlither : 1f) * world.angularSpeed - forwardSpeed;
         transform.Rotate(Vector3.forward * deg * Time.deltaTime);
 
-        if(amplitude > 90.0)
+        if(amplitude > 75.0)
         {
             SoundManager.instance.PlaySound(SoundManager.instance.soundSmashed, 1, 1);
             root.SetActive(false);

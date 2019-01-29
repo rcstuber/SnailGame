@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atSameTime: 2
   radiusOfEarth: 2.5
-  spawnAnge: {x: -20, y: -180}
+  spawnAnge: {x: -10, y: -180}
   waitMinTime: 2
   WaitMaxTime: 3
   pooledObject: {fileID: 5970884548289839110, guid: b502c16ab2c17495dbcd00476d9a5c7f,

@@ -271,24 +271,24 @@ MonoBehaviour:
     stageColor: {r: 0.7828038, g: 0.8018868, b: 0.62411, a: 1}
   - distanceGoal: 1.5
     difficulty: 1.2
-    lightningCount: 3
+    lightningCount: 2
     lightningSpawnTime: {x: 2, y: 3}
-    stageColor: {r: 0.9528302, g: 0.8980537, b: 0.5438323, a: 1}
+    stageColor: {r: 0.9150943, g: 0.88546, b: 0.6949537, a: 1}
   - distanceGoal: 2
-    difficulty: 1.6
-    lightningCount: 4
+    difficulty: 1.4
+    lightningCount: 3
     lightningSpawnTime: {x: 1, y: 1}
     stageColor: {r: 0.8962264, g: 0.6472812, b: 0.4185208, a: 1}
   - distanceGoal: 2.5
-    difficulty: 2
-    lightningCount: 5
+    difficulty: 1.6
+    lightningCount: 4
     lightningSpawnTime: {x: 1, y: 1}
     stageColor: {r: 0.8584906, g: 0.4251958, b: 0.4251958, a: 1}
   - distanceGoal: 3
     difficulty: 2
     lightningCount: 5
     lightningSpawnTime: {x: 1, y: 1}
-    stageColor: {r: 0.8584906, g: 0.4251958, b: 0.4251958, a: 1}
+    stageColor: {r: 0.6226415, g: 0.33775365, b: 0.40345284, a: 1}
   highscoreManager: {fileID: 1187387848}
   isRunning: 0
 --- !u!4 &34417410
@@ -3705,7 +3705,7 @@ RectTransform:
   m_GameObject: {fileID: 696182781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1328522922}
   m_RootOrder: 1
@@ -3728,15 +3728,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.91193485, g: 0.92766875, b: 0.9339623, a: 1}
+  m_Color: {r: 0.31132078, g: 0.2768081, b: 0.27460843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 7258f1eb578ad41cda99b1514a113519, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4560,15 +4560,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
+  m_Color: {r: 0.4339623, g: 0.3786935, b: 0.3786935, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c1c5037fefad044839e7ace7120b8c9b, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5168,7 +5168,7 @@ MonoBehaviour:
   - {fileID: 640285435}
   - {fileID: 142387612}
   - {fileID: 142286277}
-  highlightColor: {r: 0.8000001, g: 0.2392157, b: 0.08627451, a: 1}
+  highlightColor: {r: 0.8207547, g: 0.5439436, b: 0.46844962, a: 1}
 --- !u!1001 &1210440001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6118,7 +6118,7 @@ RectTransform:
   m_GameObject: {fileID: 1314689002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_Children:
   - {fileID: 991252396}
   m_Father: {fileID: 1328522922}
@@ -6126,8 +6126,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: -0.88000107, y: 0}
+  m_SizeDelta: {x: -14.11, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1327165912
 PrefabInstance:
@@ -6947,14 +6947,14 @@ RectTransform:
   m_GameObject: {fileID: 1443000242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children: []
   m_Father: {fileID: 1328522922}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -1.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1443000244
@@ -6979,16 +6979,16 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: fc6d3f433b75d46228b0cac56074becf, type: 3}
-    m_FontSize: 14
+    m_FontSize: 100
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 100
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: '10m
 
@@ -8391,7 +8391,7 @@ GameObject:
   - component: {fileID: 1717430876}
   - component: {fileID: 1717430877}
   m_Layer: 0
-  m_Name: Touch
+  m_Name: TouchSurface
   m_TagString: Touch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

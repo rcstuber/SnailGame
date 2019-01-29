@@ -79,7 +79,7 @@ public class Game : MonoBehaviour
     {
         if(isRunning)
         {
-            if(player.worldAmplitude > 90f || player.health <= 0) {
+            if(player.worldAmplitude > 75f || player.health <= 0) {
                 StartCoroutine(GameOver());
             } else {
                 UpdateStageDifficulty(activeStage);
