@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
 
         public float lightningCount;
         public Vector2 lightningSpawnTime;
+        public Vector2 lightingSpawnAngle;
 
         public Color stageColor;
     }
@@ -175,5 +176,6 @@ public class Game : MonoBehaviour
         lightningSpawner.atSameTime = stage.lightningCount;
         lightningSpawner.waitMinTime = stage.lightningSpawnTime.x;
         lightningSpawner.WaitMaxTime = stage.lightningSpawnTime.y;
+        lightningSpawner.spawnAnge = stage.lightingSpawnAngle;
     }
 }

@@ -24,7 +24,7 @@ public class Blitz : MonoBehaviour
 
     private void Update() {
         if (startLerp) {
-            announcePoint.transform.localScale = Vector3.Lerp(announcePoint.transform.localScale, new Vector3(0.1f, 0.1f, announcePoint.transform.localScale.z), 1 * Time.deltaTime);
+            announcePoint.transform.localScale = Vector3.Lerp(announcePoint.transform.localScale, new Vector3(0.01f, 0.2f, announcePoint.transform.localScale.z), 1.8f * Time.deltaTime);
         }
     }
 
@@ -53,6 +53,9 @@ public class Blitz : MonoBehaviour
     }
 
     IEnumerator Blitzen() {
+
+        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.2f, Random.Range(1, 1.3f));
+
         blitz.SetActive(true);
         yield return new WaitForSeconds(blitzTime);
         blitz.SetActive(false);

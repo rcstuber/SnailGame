@@ -11,6 +11,9 @@ public class SoundManager : MonoBehaviour {
     public AudioSource audioSource1;
     public AudioSource audioSource2;
     public AudioSource audioSource3;
+    public AudioSource audioSource4;
+    public AudioSource audioSource5;
+
 
     [Header("Music")]
     [Space]
@@ -73,12 +76,26 @@ public class SoundManager : MonoBehaviour {
             audioSource2.pitch = pitch;
             audioSource2.Play();
         }
-        else {
+        else if (!audioSource3.isPlaying) {
             audioSource3.loop = false;
             audioSource3.clip = Clip;
             audioSource3.volume = volume;
             audioSource3.pitch = pitch;
             audioSource3.Play();
+        }
+        else if (!audioSource4.isPlaying) {
+            audioSource4.loop = false;
+            audioSource4.clip = Clip;
+            audioSource4.volume = volume;
+            audioSource4.pitch = pitch;
+            audioSource4.Play();
+        }
+        else {
+            audioSource5.loop = false;
+            audioSource5.clip = Clip;
+            audioSource5.volume = volume;
+            audioSource5.pitch = pitch;
+            audioSource5.Play();
         }
     }
 }
