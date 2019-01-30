@@ -57,6 +57,8 @@ public class Game : MonoBehaviour
 
     private float highscoreScore = 0;
 
+    private float oldDistance = 0;
+
 
     void Awake()
     {
@@ -89,7 +91,7 @@ public class Game : MonoBehaviour
                     var stageIndex = stages.IndexOf(activeStage);
                     if(stageIndex + 1 < stages.Count) {
                         activeStage = stages[stageIndex + 1];
-                        highscoreScore += player.totalDistance;
+                        oldDistance += player.totalDistance;
                         player.totalDistance = 0;
 
                         SoundManager.instance.PlaySound(SoundManager.instance.soundLevelProgression,1,1);
@@ -99,8 +101,11 @@ public class Game : MonoBehaviour
                     }
                 }
 
+                highscoreScore = player.totalDistance + oldDistance;
+               
                 hud.distanceGoal = activeStage.distanceGoal;
                 hud.distanceMeter = player.totalDistance;
+                hud.distanceMeterTotal = player.totalDistance + oldDistance;
                 hud.distanceMeterColor = activeStage.stageColor;
             }
 
@@ -108,6 +113,7 @@ public class Game : MonoBehaviour
             if(Input.anyKeyDown)
             {
                 highscoreScore = 0;
+                oldDistance = 0;
 
                 player.ResetPlayer();
                 menu.SetActive(false);
@@ -130,7 +136,7 @@ public class Game : MonoBehaviour
         hud.gameObject.SetActive(false);
         gameOverMenu.SetActive(true);
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
                 
         player.ResetPlayer();
         activeStage = stages[0];

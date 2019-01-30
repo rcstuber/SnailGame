@@ -16,6 +16,9 @@ public class HUD : MonoBehaviour
     public float distanceMeter = 0;
 
     [HideInInspector]
+    public float distanceMeterTotal = 0;
+
+    [HideInInspector]
     public float distanceGoal = 10;
 
     public Color distanceMeterColor {
@@ -34,7 +37,7 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceLabel.text = distanceMeter.ToString("N2") + " m";
+        distanceLabel.text = distanceMeterTotal.ToString("N2") + " m";
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
         distanceSlider.value = distanceMeter / distanceGoal;
