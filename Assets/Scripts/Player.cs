@@ -58,9 +58,6 @@ public class Player : MonoBehaviour
 
     // Components
 
-    private AudioSource audio;
-
-
     public ParticleSystem slimePS;
 
     public Animator animatorSnail;
@@ -72,7 +69,6 @@ public class Player : MonoBehaviour
     {
         _initialHealth = health;
         _startTime = Time.time;
-        audio = GetComponent<AudioSource>();
         slimePS.Stop();
         animatorSnail.enabled = false;
         animatorHouse.enabled = false;
@@ -94,9 +90,6 @@ public class Player : MonoBehaviour
     }
 
     private float forwardSpeed = 10.0f;
-
-    private bool hasDied = false;
-
 
     private float _lastMashTime = 0;
 
@@ -136,9 +129,8 @@ public class Player : MonoBehaviour
                 }
                 _lastMashTime = Time.time;
 
-                if (!audio.isPlaying) {
-                    SoundManager.instance.PlaySound(SoundManager.instance.soundCrawl, 1, Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f));
-                }
+
+                SoundManager.instance.PlaySound(SoundManager.instance.soundCrawl, 1, Mathf.Max(1f, forwardSpeed / world.angularSpeed * 0.8f));
 
                 slimePS.Play();
             }
