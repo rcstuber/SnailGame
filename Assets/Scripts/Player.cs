@@ -182,6 +182,9 @@ public class Player : MonoBehaviour
 
         root.SetActive(true);
         SetState(0);
+        slimePS.Stop();
+        animatorSnail.enabled = false;
+        animatorHouse.enabled = false;
     }
 
     public void OnHitByLightning() 
@@ -190,11 +193,11 @@ public class Player : MonoBehaviour
             return;
             
         SetState(2);
-
-        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.4f, 1);
         slimePS.Stop();
         animatorSnail.enabled = false;
         animatorHouse.enabled = false;
+
+        SoundManager.instance.PlaySound(SoundManager.instance.soundElectrocute, 0.4f, 1);
 
         health = 0;
     }

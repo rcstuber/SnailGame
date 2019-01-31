@@ -60,6 +60,8 @@ public class Game : MonoBehaviour
 
     private float oldDistance = 0;
 
+    private bool faded = false;
+
 
     void Awake()
     {
@@ -76,6 +78,8 @@ public class Game : MonoBehaviour
         gameVictoryMenu.SetActive(false);
         hud.gameObject.SetActive(false);
         highscoreManager.Show(false);
+
+        StartCoroutine(WaitForFade());
     }
 
     void Update()
@@ -94,10 +98,12 @@ public class Game : MonoBehaviour
                         activeStage = stages[stageIndex + 1];
                         oldDistance += player.totalDistance;
                         player.totalDistance = 0;
+                        int hudStage = int.Parse(hud.levelText.text);
+                        hud.levelText.text = (hudStage + 1).ToString();
 
                         SoundManager.instance.PlaySound(SoundManager.instance.soundLevelProgression,1,1);
                     } else {
-                        StartCoroutine(GameVictory());
+                        //StartCoroutine(GameVictory());
                         return;
                     }
                 }
@@ -111,10 +117,11 @@ public class Game : MonoBehaviour
             }
 
         } else if(menu.activeSelf) {
-            if(Input.anyKeyDown)
+            if(Input.anyKeyDown && faded)
             {
                 highscoreScore = 0;
                 oldDistance = 0;
+                hud.levelText.text = "1";
 
                 player.ResetPlayer();
                 menu.SetActive(false);
@@ -146,6 +153,7 @@ public class Game : MonoBehaviour
         menu.SetActive(true);
     }
 
+    /*
     IEnumerator GameVictory()
     {
         highscoreManager.AddHighscore(0 == stages.IndexOf(activeStage) 
@@ -166,7 +174,7 @@ public class Game : MonoBehaviour
         gameVictoryMenu.SetActive(false);
         menu.SetActive(true);
     }
-
+    */
 
     public void UpdateStageDifficulty(Stage stage)
     {
@@ -177,5 +185,10 @@ public class Game : MonoBehaviour
         lightningSpawner.waitMinTime = stage.lightningSpawnTime.x;
         lightningSpawner.WaitMaxTime = stage.lightningSpawnTime.y;
         lightningSpawner.spawnAnge = stage.lightingSpawnAngle;
+    }
+
+    IEnumerator WaitForFade() {
+        yield return new WaitForSeconds(1);
+        faded = true;
     }
 }

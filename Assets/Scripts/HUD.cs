@@ -9,8 +9,9 @@ public class HUD : MonoBehaviour
 
     public Image distanceSliderFill;
 
-
     public Text distanceLabel;
+
+    public Text levelText;
 
     [HideInInspector]
     public float distanceMeter = 0;
