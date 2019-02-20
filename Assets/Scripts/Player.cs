@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
             return;
 
         // Hide in shell
+        /*
         if(Input.GetButtonDown("Jump") && !_isFirstLoop && health > 0)
         {
             _isInShell = !_isInShell;
@@ -111,6 +112,7 @@ public class Player : MonoBehaviour
 
             SoundManager.instance.PlaySound(SoundManager.instance.soundHide, 1, 1);
         }
+        */
 
         // Crawl forward
         if(!_isInShell && Input.GetButtonDown("Fire1") && health > 0 || Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && Input.GetButtonDown("Fire1") && health > 0 && !_isInShell) 
